@@ -12,12 +12,14 @@
     }
 
     #canvas{
+      width:1600px;
+      heieght:1000px;
       border:2px solid black;
       margin:0;
       position:absolute;
       top:50%;
       left:50%;
-      transform:translate(-50%,-50%);
+      transform:translate(-50%,-50%) scale(0.5);
       image-rendering: pixelated;
     }
 
@@ -28,6 +30,7 @@
 </head>
 <body>
   <canvas id='canvas' width="800" height="500"></canvas>
+  <script src = "Background.js"></script>
   <script src = "KeyboardInput.js"></script>
   <script src = "Sprite.js"></script>
   <script src = "Player.js"></script>

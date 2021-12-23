@@ -12,12 +12,11 @@ class Sprite{
     this.frameProgress = this.animationFrameLimit;
 
     this.animations = {
-      // 'run': [[131, 448],[171,450], [214, 449], ],
       'run': [[2,448],[45,448], [90, 448], ],
       'idle': [[0,9], [45,9], [91,9], [135,9],[178,9]]
     }
 
-    this.currentAnimation = this.playerInfo.currentAnimation;
+    this.currentAnimation = this.playerInfo.currentAnimation || 'idle';
     this.currentAnimationFrame = 0;
   }
 
@@ -27,15 +26,23 @@ class Sprite{
 
   updateAnimationFrame(){
     if(this.frameProgress > 0){
-      this.frameProgress --;
-      return
+      this.frameProgress -= 1;
+    return
     }
 
     this.frameProgress = this.animationFrameLimit;
-    this.currentAnimationFrame ++;
-
+    this.currentAnimationFrame += 1;
+    
     if(this.frame == undefined){
       this.currentAnimationFrame = 0;
+    }
+  }
+
+  updateCurrentAnimation(currentAnimation){
+    if(this.currentAnimation !== currentAnimation){
+      this.currentAnimation = currentAnimation;
+      this.currentAnimationFrame = 0;
+      this.frameProgress = this.animationFrameLimit;
     }
   }
 
@@ -50,15 +57,11 @@ class Sprite{
   draw(ctx){
     const [x,y] = this.frame;
     if(this.imageLoaded)
-      if(this.playerInfo.lastDirection == 'right'){
-        this.drawflippedImage(x,y,ctx)
-      }else{
-        ctx.drawImage(this.image, x,y, 40, 50, this.playerInfo.x, this.playerInfo.y, 40, 50)
-      }
-      this.updateAnimationFrame();
+    if(this.playerInfo.lastDirection == 'right'){
+      this.drawflippedImage(x,y,ctx)
+    }else{
+      ctx.drawImage(this.image, x,y, 40, 50, this.playerInfo.x, this.playerInfo.y, 40, 50)
+    }
+    this.updateAnimationFrame();
   }
 }
-
-// ctx.drawImage(this.image, 171, 450, 35, 45, 400, y-this.height, this.width, this.height )
-//     ctx.drawImage(this.image, 214, 449, 35, 45, 400, y-this.height, this.width, this.height )
-//     ctx.drawImage(this.image,131, 448, 35, 45, 400, y-this.height, this.width, this.height )

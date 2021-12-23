@@ -8,6 +8,7 @@ class KeyboardInput{
   }
 
   get direction(){
+
     return this.directions[this.directions.length-1];
   }
 

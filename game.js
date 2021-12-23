@@ -11,9 +11,11 @@ class Game{
 
     this.player = new Player({
       x: 100,
-      y: 100,
+      y: 400,
       src: "./rudolph.png",
     })
+
+    this.background = new Background("./BACKGROUND1.png")
 
     this.startGame();
   }
@@ -21,10 +23,11 @@ class Game{
   render(){
     const loop = () =>{
       this.ctx.clearRect(0,0,canvas.clientWidth, canvas.clientHeight);
+      this.background.draw(this.ctx);
+      this.player.sprite.draw(this.ctx);
       this.player.update({
         direction:this.keyboardInput.direction
       })
-      this.player.sprite.draw(this.ctx);
       requestAnimationFrame(loop)
     }
     loop()
