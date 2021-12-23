@@ -2,14 +2,15 @@ class Player{
   constructor(config){
     this.x = config.x;
     this.y = config.y;
-    this.speed = config.speed || 3;
     this.acc = 0.5;
+    this.speed = 3.2;
 
     this.direction = config.direction || 'right';
     this.currentAnimation = 'idle'
     this.sprite = new Sprite({
       playerInfo:this,
-      src: config.src,
+      src1: config.src1,
+      src2: config.src2,
     });
   }
 
@@ -26,9 +27,16 @@ class Player{
 
   updatePosition(direction){
     if(direction == 'left'){
+      this.sprite.setCurrentImage('left')
       this.x -= this.speed;
     }else{
+      this.sprite.setCurrentImage('right')
       this.x += this.speed;
     }
   }
+
+  get position(){
+    return [this.x, this.y];
+  }
+
 }

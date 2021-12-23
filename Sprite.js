@@ -1,19 +1,30 @@
 class Sprite{
   constructor(config){
     this.playerInfo = config.playerInfo
-
-    this.image = new Image();
-    this.image.src = config.src;
-    this.image.onload =()=>{
-      this.imageLoaded = true;
+    this.image1 = new Image();
+    this.image1.src = config.src1;
+    this.image1.onload =()=>{
+      this.image1Loaded = true;
     }
+
+    this.image2 = new Image();
+    this.image2.src = config.src2;
+    this.image2.onload =()=>{
+      this.image2Loaded = true;
+    }
+    this.currentImage = this.image1;
 
     this.animationFrameLimit = 8;
     this.frameProgress = this.animationFrameLimit;
 
-    this.animations = {
+    this.leftAnimations = {
       'run': [[2,448],[45,448], [90, 448], ],
       'idle': [[0,9], [45,9], [91,9], [135,9],[178,9]]
+    }
+
+    this.rightAnimations = {
+      'run': [[468,448],[423,448], [381, 448], ],
+      'idle': [[467,9], [422,9], [376,9], [332,9],[289,9]]
     }
 
     this.currentAnimation = this.playerInfo.currentAnimation || 'idle';
@@ -21,7 +32,19 @@ class Sprite{
   }
 
   get frame(){
-    return this.animations[this.currentAnimation][this.currentAnimationFrame]
+    if(this.playerInfo.lastDirection == 'right'){
+      return this.rightAnimations[this.currentAnimation][this.currentAnimationFrame]
+    }else{
+      return this.leftAnimations[this.currentAnimation][this.currentAnimationFrame]
+    }
+  }
+
+  setCurrentImage(direction){
+    if(direction == 'right'){
+      this.currentImage = this.image2
+    }else{
+      this.currentImage = this.image1
+    }
   }
 
   updateAnimationFrame(){
@@ -46,21 +69,17 @@ class Sprite{
     }
   }
 
-  //!원래 x좌표의 2배 + 너비만큼 이동, translate 후엔 transform 복구
-  drawflippedImage(x,y,ctx){
-    ctx.translate(2*this.playerInfo.x+40,0)
-    ctx.scale(-1,1);
-    ctx.drawImage(this.image, x,y, 40, 50, this.playerInfo.x, this.playerInfo.y, 40, 50)
-    ctx.setTransform(1,0,0,1,0,0)
-  }
-
-  draw(ctx){
+  draw({ctx, camera}){
     const [x,y] = this.frame;
-    if(this.imageLoaded)
-    if(this.playerInfo.lastDirection == 'right'){
-      this.drawflippedImage(x,y,ctx)
-    }else{
-      ctx.drawImage(this.image, x,y, 40, 50, this.playerInfo.x, this.playerInfo.y, 40, 50)
+    if(this.image1Loaded && this.image2Loaded){
+      if(this.playerInfo.x <= 400){
+        ctx.drawImage(this.currentImage, x,y, 40, 50, this.playerInfo.x, this.playerInfo.y, 40, 50)
+      }else if(this.playerInfo.x >=1200){
+        ctx.drawImage(this.currentImage, x,y, 40, 50, 400+this.playerInfo.x-1200, this.playerInfo.y, 40, 50)
+      }
+      else{
+        ctx.drawImage(this.currentImage, x,y, 40, 50, 400+this.playerInfo.x-camera.x, this.playerInfo.y, 40, 50)
+      }
     }
     this.updateAnimationFrame();
   }
