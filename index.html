@@ -18,6 +18,7 @@
       top:50%;
       left:50%;
       transform:translate(-50%,-50%);
+      image-rendering: pixelated;
     }
 
     img{
@@ -26,8 +27,10 @@
   </style>
 </head>
 <body>
-  <canvas id='canvas'></canvas>
-  <img id='rudolph' src="rudolph.png">
-  <script src="game.js"></script>
+  <canvas id='canvas' width="800" height="500"></canvas>
+  <script src = "KeyboardInput.js"></script>
+  <script src = "Sprite.js"></script>
+  <script src = "Player.js"></script>
+  <script src="Game.js"></script>
 </body>
 </html>
