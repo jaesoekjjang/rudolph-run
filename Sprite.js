@@ -3,29 +3,18 @@ class Sprite{
     this.playerInfo = config.playerInfo
     this.image1 = new Image();
     this.image1.src = config.src1;
-    this.image1.onload =()=>{
-      this.image1Loaded = true;
+    this.leftAnimations = config.leftAnimations;
+
+    if(config.src2){
+      this.image2 = new Image();
+      this.image2.src = config.src2;
     }
 
-    this.image2 = new Image();
-    this.image2.src = config.src2;
-    this.image2.onload =()=>{
-      this.image2Loaded = true;
-    }
+    this.rightAnimations = config.rightAnimations;
     this.currentImage = this.image1;
 
-    this.animationFrameLimit = 8;
+    this.animationFrameLimit = 7;
     this.frameProgress = this.animationFrameLimit;
-
-    this.leftAnimations = {
-      'run': [[2,448],[45,448], [90, 448], ],
-      'idle': [[0,9], [45,9], [91,9], [135,9],[178,9]]
-    }
-
-    this.rightAnimations = {
-      'run': [[468,448],[423,448], [381, 448], ],
-      'idle': [[467,9], [422,9], [376,9], [332,9],[289,9]]
-    }
 
     this.currentAnimation = this.playerInfo.currentAnimation || 'idle';
     this.currentAnimationFrame = 0;
@@ -71,16 +60,11 @@ class Sprite{
 
   draw({ctx, camera}){
     const [x,y] = this.frame;
-    if(this.image1Loaded && this.image2Loaded){
-      if(this.playerInfo.x <= 400){
-        ctx.drawImage(this.currentImage, x,y, 40, 50, this.playerInfo.x, this.playerInfo.y, 40, 50)
-      }else if(this.playerInfo.x >=1200){
-        ctx.drawImage(this.currentImage, x,y, 40, 50, 400+this.playerInfo.x-1200, this.playerInfo.y, 40, 50)
+    if(this.playerInfo.x <= 400){
+        ctx.drawImage(this.currentImage, x,y, this.playerInfo.width, this.playerInfo.height,  this.playerInfo.x, this.playerInfo.y, this.playerInfo.width, this.playerInfo.height)
+      }else{
+        ctx.drawImage(this.currentImage, x,y, this.playerInfo.width, this.playerInfo.height, 400+this.playerInfo.x-camera.x, this.playerInfo.y, this.playerInfo.width, this.playerInfo.height)
       }
-      else{
-        ctx.drawImage(this.currentImage, x,y, 40, 50, 400+this.playerInfo.x-camera.x, this.playerInfo.y, 40, 50)
-      }
-    }
     this.updateAnimationFrame();
   }
 }
