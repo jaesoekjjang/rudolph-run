@@ -1,15 +1,14 @@
-class GameObject{
-  constructor(x,y,width,height){
+export default class GameObject {
+  constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
   }
 
-  update(){
-  }
+  update() {}
 
-  get position(){
+  get position() {
     return [this.x, this.y];
   }
 }
