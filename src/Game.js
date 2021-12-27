@@ -1,9 +1,10 @@
 import KeyboardInput from './KeyboardInput';
 import Character from './Character';
+import Santa from './Santa';
 import Background from './Background';
 
 import backgroundImage from '../image/background.png';
-import santaImage from '../image/santa-left.png';
+import santaImage from '../image/santa1.png';
 import rudolphLeftImage from '../image/rudolph.png';
 import rudolphRightImage from '../image/rudolph-reverse.png';
 
@@ -11,7 +12,7 @@ export default class Game {
   constructor() {
     this.canvas = document.querySelector('#canvas');
     this.ctx = canvas.getContext('2d');
-    this.ctx.imageSmootingEnabled = false;
+    this.ctx.imageSmoothingEnabled = false;
     this.map = null;
   }
 
@@ -21,7 +22,7 @@ export default class Game {
 
     this.player = new Character({
       isPlayer: true,
-      x: 500,
+      x: 4050,
       y: 400,
       width: 41,
       height: 50,
@@ -49,20 +50,20 @@ export default class Game {
           [381, 448],
         ],
         idle: [
-          [467, 9],
-          [422, 9],
-          [376, 9],
-          [332, 9],
-          [289, 9],
+          [465, 9],
+          [420, 9],
+          [374, 9],
+          [330, 9],
+          [287, 9],
         ],
         jump: [[337, 191]],
       },
     });
 
-    this.santa = new Character({
-      x: 2000,
+    this.santa = new Santa({
+      x: 4400,
       y: 360,
-      width: 70,
+      width: 77,
       height: 90,
       zIndex: 1,
       direction: 'left',
@@ -74,14 +75,24 @@ export default class Game {
           [90, 448],
         ],
         idle: [
-          [63, 5],
-          [214, 5],
-          [365, 6],
-          [516, 6],
-          [666, 6],
-          [817, 6],
-          [968, 6],
-          [1118, 6],
+          [63, 4],
+          [214, 4],
+          [365, 4],
+          [516, 4],
+          [666, 4],
+          [817, 4],
+          [968, 4],
+          [1118, 4],
+        ],
+        jump: [
+          [57, 214],
+          [204, 212],
+          [354, 211],
+          [504, 211],
+          [654, 211],
+          [804, 212],
+          [956, 217],
+          [1109, 215],
         ],
       },
       rightAnimations: {
@@ -91,14 +102,14 @@ export default class Game {
           [381, 448],
         ],
         idle: [
-          [63, 5],
-          [214, 5],
-          [366, 6],
-          [518, 6],
-          [668, 6],
-          [819, 6],
-          [969, 6],
-          [1120, 6],
+          [63, 4],
+          [214, 4],
+          [366, 4],
+          [518, 3],
+          [668, 3],
+          [819, 3],
+          [969, 3],
+          [1120, 3],
         ],
       },
     });
@@ -112,6 +123,11 @@ export default class Game {
       this.ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
       this.background.draw({ ctx: this.ctx, camera: this.player });
       this.santa.sprite.draw({ ctx: this.ctx, camera: this.player });
+
+      if (this.player.position[0] > 4080) {
+        this.player.stopBehavior();
+        this.santa.cutScene(this.ctx);
+      }
 
       this.player.sprite.draw({ ctx: this.ctx, camera: this.player });
       this.player.update({
