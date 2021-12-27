@@ -1,10 +1,17 @@
 import KeyboardInput from './KeyboardInput';
 import Character from './Character';
+<<<<<<< HEAD
 import Santa from './Santa';
 import Background from './Background';
 
 import backgroundImage from '../image/background.png';
 import santaImage from '../image/santa1.png';
+=======
+import Background from './Background';
+
+import backgroundImage from '../image/background.png';
+import santaImage from '../image/santa-left.png';
+>>>>>>> 0437e07d2af407cf1fa2500febf48aa3aaea107b
 import rudolphLeftImage from '../image/rudolph.png';
 import rudolphRightImage from '../image/rudolph-reverse.png';
 
@@ -12,7 +19,11 @@ export default class Game {
   constructor() {
     this.canvas = document.querySelector('#canvas');
     this.ctx = canvas.getContext('2d');
+<<<<<<< HEAD
     this.ctx.imageSmoothingEnabled = false;
+=======
+    this.ctx.imageSmootingEnabled = false;
+>>>>>>> 0437e07d2af407cf1fa2500febf48aa3aaea107b
     this.map = null;
   }
 
@@ -22,7 +33,11 @@ export default class Game {
 
     this.player = new Character({
       isPlayer: true,
+<<<<<<< HEAD
       x: 4050,
+=======
+      x: 500,
+>>>>>>> 0437e07d2af407cf1fa2500febf48aa3aaea107b
       y: 400,
       width: 41,
       height: 50,
