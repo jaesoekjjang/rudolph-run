@@ -1,46 +1,36 @@
 import KeyboardInput from './KeyboardInput';
-import Character from './Character';
-<<<<<<< HEAD
+import GameObject from './GameObject';
+import Player from './Player';
 import Santa from './Santa';
 import Background from './Background';
 
 import backgroundImage from '../image/background.png';
 import santaImage from '../image/santa1.png';
-=======
-import Background from './Background';
-
-import backgroundImage from '../image/background.png';
-import santaImage from '../image/santa-left.png';
->>>>>>> 0437e07d2af407cf1fa2500febf48aa3aaea107b
 import rudolphLeftImage from '../image/rudolph.png';
 import rudolphRightImage from '../image/rudolph-reverse.png';
+import startBoardImage from '../image/start.png';
 
 export default class Game {
   constructor() {
     this.canvas = document.querySelector('#canvas');
     this.ctx = canvas.getContext('2d');
-<<<<<<< HEAD
     this.ctx.imageSmoothingEnabled = false;
-=======
-    this.ctx.imageSmootingEnabled = false;
->>>>>>> 0437e07d2af407cf1fa2500febf48aa3aaea107b
     this.map = null;
+    this.gameObjects = [];
   }
 
   init() {
     this.keyboardInput = new KeyboardInput();
     this.keyboardInput.init();
 
-    this.player = new Character({
+    this.player = new Player({
       isPlayer: true,
-<<<<<<< HEAD
-      x: 4050,
-=======
-      x: 500,
->>>>>>> 0437e07d2af407cf1fa2500febf48aa3aaea107b
+      x: 180,
       y: 400,
       width: 41,
       height: 50,
+      direction: 'right',
+      acc: 0.15,
       src1: rudolphLeftImage,
       src2: rudolphRightImage,
       leftAnimations: {
@@ -72,6 +62,16 @@ export default class Game {
           [287, 9],
         ],
         jump: [[337, 191]],
+        cry: [
+          [469, 514],
+          [428, 513],
+          [335, 514],
+          [249, 514],
+          [168, 514],
+          [81, 514],
+          [42, 514],
+          [3, 514],
+        ],
       },
     });
 
@@ -129,6 +129,22 @@ export default class Game {
       },
     });
 
+    this.startBoard = new GameObject({
+      x: 220,
+      y: 390,
+      width: 50,
+      height: 50,
+      frameX: 0,
+      frameY: 0,
+      frameWidth: 493,
+      frameHeight: 512,
+      src: startBoardImage,
+    });
+
+    this.gameObjects.push(this.startBoard);
+    this.gameObjects.push(this.santa);
+    this.gameObjects.push(this.player);
+
     this.background = new Background(backgroundImage);
     this.startGame();
   }
@@ -137,14 +153,16 @@ export default class Game {
     const loop = () => {
       this.ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
       this.background.draw({ ctx: this.ctx, camera: this.player });
-      this.santa.sprite.draw({ ctx: this.ctx, camera: this.player });
+      this.gameObjects.forEach((gameObject) => {
+        gameObject.draw({ ctx: this.ctx, camera: this.player });
+      });
 
       if (this.player.position[0] > 4080) {
         this.player.stopBehavior();
         this.santa.cutScene(this.ctx);
+        this.player.cry();
       }
 
-      this.player.sprite.draw({ ctx: this.ctx, camera: this.player });
       this.player.update({
         direction: this.keyboardInput.direction,
       });
