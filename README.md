@@ -11,7 +11,7 @@
   - Prettier
   - Eslint
   - Parcel(Bundler)
-- 배포 및 도메인 설정[http://rudolph-run.ga](http://rudolph-run.ga)
+- 배포 및 도메인 설정([http://rudolph-run.ga](http://rudolph-run.ga))
   - Amazon S3
   - Amazon CloudFront
   - Amazon Route53
