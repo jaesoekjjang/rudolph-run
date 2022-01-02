@@ -14,7 +14,7 @@
   - Parcel(Bundler)
   - Husky
   - lint-staged
-- 배포 및 도메인 설정([https://rudolph-run.ga](https://rudolph-run.ga))
+- 배포 및 도메인 설정([~~https://rudolph-run.ga](https://rudolph-run.ga))
   - Amazon S3
   - Amazon CloudFront
   - Amazon Route53
