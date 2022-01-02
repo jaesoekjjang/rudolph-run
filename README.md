@@ -7,10 +7,13 @@
 루돌프 런 프로젝트를 통해 아래와 같은 기술들을 학습하고자 하였습니다.
 
 - Canvas API
+- Git Hooks
 - 프로젝트 셋팅
   - Prettier
   - Eslint
   - Parcel(Bundler)
+  - Husky
+  - lint-staged
 - 배포 및 도메인 설정([https://rudolph-run.ga](https://rudolph-run.ga))
   - Amazon S3
   - Amazon CloudFront

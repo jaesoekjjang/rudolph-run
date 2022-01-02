@@ -9,4 +9,7 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
+  rules: {
+    'no-unused-expressions': 'off',
+  },
 };

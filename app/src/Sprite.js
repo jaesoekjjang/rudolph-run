@@ -30,15 +30,14 @@ export default class Sprite {
   }
 
   get frame() {
-    if (this.info.lastDirection == 'right') {
+    if (this.info.lastDirection === 'right') {
       return this.rightAnimations[this.currentAnimation][this.currentAnimationFrame];
-    } else {
-      return this.leftAnimations[this.currentAnimation][this.currentAnimationFrame];
     }
+    return this.leftAnimations[this.currentAnimation][this.currentAnimationFrame];
   }
 
   setCurrentImage(direction) {
-    if (direction == 'right') {
+    if (direction === 'right') {
       this.currentImage = this.image2;
     } else {
       this.currentImage = this.image1;
@@ -54,7 +53,7 @@ export default class Sprite {
     this.frameProgress = this.animationFrameLimit;
     this.currentAnimationFrame += 1;
 
-    if (this.frame == undefined) {
+    if (this.frame === undefined) {
       this.currentAnimationFrame = 0;
     }
   }
