@@ -20,9 +20,11 @@ export default class Santa extends Character {
     };
     this.speechBubble.src = speechBubbleImage;
     this.jumpCounter = 70;
+
+    this.endingCounter = 300;
   }
 
-  cutScene(ctx) {
+  cutScene(ctx, endGame) {
     if (this.emojCounter) {
       this.emojiLoaded && ctx.drawImage(this.emoji, 50, 30, 210, 210, 730, 330, 32, 32);
       this.emojCounter -= 1;
@@ -36,6 +38,12 @@ export default class Santa extends Character {
       ctx.fillText('할 일이 잔뜩 쌓여있는데 어딜', 570, 320);
       ctx.fillText('놀러 다닌거야!!', 570, 335);
       ctx.fillText('어서 선물 싣고 떠날 준비해라!', 570, 350);
+      this.endingCounter -= 1;
+      if (!this.endingCounter) {
+        document.querySelector('#ending').style.opacity = 1;
+        document.querySelector('#santa').className = 'animate';
+        endGame();
+      }
     }
   }
 }
