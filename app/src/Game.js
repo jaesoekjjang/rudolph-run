@@ -13,7 +13,8 @@ import startBoardImage from '../image/start.png';
 export default class Game {
   constructor() {
     this.canvas = document.querySelector('#canvas');
-    this.ctx = canvas.getContext('2d');
+    this.animation;
+    this.ctx = this.canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
     this.map = null;
     this.gameObjects = [];
@@ -151,7 +152,7 @@ export default class Game {
 
   render() {
     const loop = () => {
-      this.ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+      this.ctx.clearRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
       this.background.draw({ ctx: this.ctx, camera: this.player });
       this.gameObjects.forEach((gameObject) => {
         gameObject.draw({ ctx: this.ctx, camera: this.player });
@@ -159,19 +160,23 @@ export default class Game {
 
       if (this.player.position[0] > 4080) {
         this.player.stopBehavior();
-        this.santa.cutScene(this.ctx);
+        this.santa.cutScene(this.ctx, () => this.endGame().bind(this));
         this.player.cry();
       }
 
       this.player.update({
         direction: this.keyboardInput.direction,
       });
-      requestAnimationFrame(loop);
+      this.animation = requestAnimationFrame(loop);
     };
     loop();
   }
 
   startGame() {
     this.render();
+  }
+
+  endGame() {
+    cancelAnimationFrame(this.animation);
   }
 }

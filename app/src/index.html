@@ -11,24 +11,101 @@
         margin: 0;
       }
 
-      #canvas {
+      #frame {
         width: 1600px;
-        heieght: 1000px;
+        height: 1000px;
         border: 2px solid black;
-        margin: 0;
         position: absolute;
+        transform: translate(-50%, -50%) scale(0.5);
+        margin: 0;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.5);
       }
 
-      img {
-        display: none;
+      #canvas {
+        width: 100%;
+        height: 100%;
+      }
+
+      #ending {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background: radial-gradient(#df1f27 0%, #d82129 60%, #7e1318 95%);
+        overflow: hidden;
+        transition-duration: 4s;
+      }
+
+      .content {
+        position: relative;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .moon {
+        margin: auto;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background-color: white;
+      }
+
+      h1 {
+        position: absolute;
+        top: -40%;
+        width: 100%;
+        text-align: center;
+        font-size: 72px;
+      }
+
+      #santa {
+        position: absolute;
+        top: 30%;
+        left: 100%;
+        transform-origin: 0 0;
+        transform: scale(0.3);
+      }
+
+      .animate {
+        animation-name: animate;
+        animation-duration: 6s;
+        animation-delay: 2s;
+      }
+
+      @keyframes animate {
+        from {
+          left: 100%;
+        }
+
+        to {
+          left: -30%;
+        }
+      }
+
+      #trees {
+        position: relative;
+        top: 5%;
+        right: 78%;
+        width: 3000px;
       }
     </style>
   </head>
   <body>
-    <canvas id="canvas" width="800" height="500"></canvas>
+    <div id="frame">
+      <canvas id="canvas" class="none" width="800" height="500"></canvas>
+      <div id="ending" class="none">
+        <div class="content">
+          <h1>Merry Christmas</h1>
+          <div class="moon"></div>
+        </div>
+        <img id="santa" src="../image/ending_santa.png" />
+        <img id="trees" src="../image/trees.png" />
+      </div>
+    </div>
     <script src="main.js" async></script>
   </body>
 </html>
